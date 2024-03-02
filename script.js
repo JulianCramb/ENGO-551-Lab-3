@@ -2,16 +2,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var mapInitialized = false; // Flag outside the function
     var map; // Declare map outside the function to make it accessible
+    var markersAdded = false; // Flag to track whether markers have been added
 
+    // Initialize date range picker
+    var dateRangePicker = flatpickr("#date-range-picker", {
+        mode: "range"
+    });
+
+    // Move map initialization outside of the initializeMap function
+    map = L.map('map').setView([51.0447, -114.0719], 10.5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // Define initializeMap function in the global scope
     function initializeMap() {
         return new Promise((resolve, reject) => {
             if (!mapInitialized) { // Initialize only if not done before
-                map = L.map('map').setView([51.0447, -114.0719], 11);
-
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                }).addTo(map);
-
                 mapInitialized = true; // Set the flag
                 resolve(map);
             } else {
@@ -20,13 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
-    var oms;
-
-    // Initialize date range picker
-    var dateRangePicker = flatpickr("#date-range-picker", {
-        mode: "range"
-    });
 
     // Search button event handler
     document.getElementById('searchButton').addEventListener('click', function () {
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     map.removeLayer(layer);
                 }
             });
+            markersAdded = false; // Reset the flag when clearing the map
         }
     }
 
@@ -77,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var markers = L.markerClusterGroup();
 
         // Initialize the spiderfier 
-        oms = new OverlappingMarkerSpiderfier(map);
+        var oms = new OverlappingMarkerSpiderfier(map);
 
         // Add new markers from geojsonData  
         geojsonData.features.forEach(feature => {
@@ -97,8 +99,11 @@ document.addEventListener('DOMContentLoaded', function () {
             oms.addMarker(marker);
         });
 
-        // Add cluster group to the map
-        map.addLayer(markers);
+        // Add cluster group to the map only if markers haven't been added yet
+        if (!markersAdded) {
+            map.addLayer(markers);
+            markersAdded = true; // Set the flag to true after adding markers
+        }
     }
 
     function createPermitPopup(feature) {
