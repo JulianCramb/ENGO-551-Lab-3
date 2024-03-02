@@ -9,7 +9,7 @@ This project is a web app that has a user navigable map on it, initially centere
 #### JavaScript Files  
 
 1. **Script.js**
-   - This is where the backend of the webapp lies, it contains all the functions and scripting used to link the two APIs and the plug-ins so that they can all work seamlessly.
+   - This is where the backend of the webapp lies, it contains all the functions and scripting used to link the two APIs and the plug-ins so that they can all work seamlessly. This script uses the Spiderfier overlapping plug-in and the leaflet clustering plug-in to make the map more visually appealing.
    
 #### HTML Files
 
