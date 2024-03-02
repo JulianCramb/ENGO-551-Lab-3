@@ -1,22 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    var mapInitialized = false; // Flag outside the function
-    var map; // Declare map outside the function to make it accessible
+    var mapInitialized = false;
+    var map; 
     var markersAdded = false; // Flag to track whether markers have been added
 
     // Initialize date range picker
     var dateRangePicker = flatpickr("#date-range-picker", {
         mode: "range"
     });
-
-    // Move map initialization outside of the initializeMap function
+    // Setting the Map view to Calgary
     map = L.map('map').setView([51.0447, -114.0719], 10.5);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    // Define initializeMap function in the global scope
+
     function initializeMap() {
         return new Promise((resolve, reject) => {
             if (!mapInitialized) { // Initialize only if not done before
@@ -24,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 resolve(map);
             } else {
                 console.warn("Map already initialized, skipping...");
-                resolve(map); // Resolve with the existing map object (adjust if needed)
+                resolve(map); // Resolve with the existing map object 
             }
         });
     }
