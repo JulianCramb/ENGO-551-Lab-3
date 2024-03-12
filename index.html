@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Calgary Building Permits</title>
+    <title>Calgary 2017 Traffic Incidents</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> 
     <link rel="stylesheet" href="style.css" />    
@@ -12,8 +12,11 @@
 </head>
 <body>
     <div id="map"></div> 
+
     <input type="text" id="date-range-picker">
     <button id="searchButton">Search</button>
+
+    <input type="checkbox" id="mapbox-layer-toggle"> <label for="mapbox-layer-toggle">Toggle Mapbox Layer</label>
 
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
